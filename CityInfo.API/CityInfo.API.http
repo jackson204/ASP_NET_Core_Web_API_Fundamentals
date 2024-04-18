@@ -1,6 +1,8 @@
 @CityInfo.API_HostAddress = http://localhost:5045
 
-GET {{CityInfo.API_HostAddress}}/weatherforecast/
+GET {{CityInfo.API_HostAddress}}/api/Cities
 Accept: application/json
 
-###
+### 406 Not Acceptable
+GET {{CityInfo.API_HostAddress}}/api/Cities
+Accept: application/xml

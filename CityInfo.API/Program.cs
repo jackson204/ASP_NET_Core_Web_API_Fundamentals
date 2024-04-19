@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.StaticFiles;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,6 +25,8 @@ builder.Services.AddProblemDetails(options => options.CustomizeProblemDetails = 
 
 #endregion
 
+
+builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 var app = builder.Build();
 
 //

@@ -18,7 +18,7 @@ public class PointsOfInterestController : ControllerBase
         return Ok(city.PointOfInterestDtos);
     }
 
-    [HttpGet("{pointsofinterestid}")]
+    [HttpGet("{pointsofinterestid}", Name = "GetPointOfInterest")]
     public IActionResult GetPointOfInterest(int cityId, int pointsofinterestid)
     {
         var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
@@ -32,5 +32,36 @@ public class PointsOfInterestController : ControllerBase
             return NotFound();
         }
         return Ok(pointOfInterest);
+    }
+
+    //參考文件 https://www.cnblogs.com/zhaoshujie/p/12306481.html
+    [HttpPost]
+    public IActionResult CreatePointOfInterest(int cityId, [FromBody] PointOfInterestForCreationDto pointOfInterest)
+    {
+        if (pointOfInterest == null)
+        {
+            return BadRequest();
+        }
+        var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+        if (city == null)
+        {
+            return NotFound();
+        }
+        var maxPointOfInterestId = CitiesDataStore.Current.Cities.SelectMany(c => c.PointOfInterestDtos).Max(p => p.Id);
+        var finalPointOfInterest = new PointOfInterestDto
+        {
+            Id = ++maxPointOfInterestId,
+            Name = pointOfInterest.Name,
+            Description = pointOfInterest.Description
+        };
+        city.PointOfInterestDtos.Add(finalPointOfInterest);
+
+        return CreatedAtRoute("GetPointOfInterest",
+            new
+            {
+                cityId,
+                pointsofinterestid = finalPointOfInterest.Id
+            },
+            finalPointOfInterest);
     }
 }

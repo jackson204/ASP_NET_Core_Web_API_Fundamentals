@@ -87,4 +87,22 @@ public class PointsOfInterestController : ControllerBase
 
         return NoContent();
     }
+    
+    [HttpDelete("{pointsofinterestid}")]
+    public IActionResult DeletePointOfInterest(int cityId, int pointsofinterestid)
+    {
+        var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+        if (city == null)
+        {
+            return NotFound();
+        }
+        var pointOfInterestFromStore = city.PointOfInterestDtos.FirstOrDefault(p => p.Id == pointsofinterestid);
+        if (pointOfInterestFromStore == null)
+        {
+            return NotFound();
+        }
+        city.PointOfInterestDtos.Remove(pointOfInterestFromStore);
+
+        return NoContent();
+    }
 }

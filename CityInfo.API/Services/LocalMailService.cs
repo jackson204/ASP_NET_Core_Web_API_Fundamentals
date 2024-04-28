@@ -2,8 +2,16 @@ namespace CityInfo.API.Services;
 
 public class LocalMailService : ILocalMailService
 {
-    public string _mailFrom = "nor@com.com";
-    public string _mailTo = "admin@company.com";
+    public string _mailFrom;
+    public string _mailTo;
+
+    private IConfiguration _configuration;
+
+    public LocalMailService(IConfiguration configuration)
+    {
+        _mailFrom = configuration["mailSettings:mailFrom"];
+        _mailTo = configuration["mailSettings:mailTo"];
+    }
 
     public void Send(string subject, string message)
     {

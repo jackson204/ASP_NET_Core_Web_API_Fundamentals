@@ -7,12 +7,20 @@ namespace CityInfo.API.Controllers;
 [Route("api/cities/{cityId}/pointsofinterest")]
 public class PointsOfInterestController : ControllerBase
 {
+    private readonly ILogger<PointsOfInterestController> _logger;
+
+    public PointsOfInterestController(ILogger<PointsOfInterestController> logger)
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+
     [HttpGet]
     public IActionResult GetPointsOfInterest(int cityId)
     {
         var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
         if (city == null)
         {
+            _logger.LogInformation("City with id {cityId} wasn't found.", cityId);
             return NotFound();
         }
         return Ok(city.PointOfInterestDtos);
@@ -87,7 +95,7 @@ public class PointsOfInterestController : ControllerBase
 
         return NoContent();
     }
-    
+
     [HttpDelete("{pointsofinterestid}")]
     public IActionResult DeletePointOfInterest(int cityId, int pointsofinterestid)
     {

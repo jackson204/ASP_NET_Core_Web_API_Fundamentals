@@ -17,6 +17,7 @@ public class PointsOfInterestController : ControllerBase
     [HttpGet]
     public IActionResult GetPointsOfInterest(int cityId)
     {
+        throw new Exception("Test exception");
         var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
         if (city == null)
         {

@@ -53,5 +53,4 @@ public class CitiesDataStore
 
     public List<CityDto> Cities { get; set; }
 
-    public static CitiesDataStore Current { get; } = new CitiesDataStore();
 }

@@ -1,5 +1,5 @@
+using CityInfo.API.Models;
 using CityInfo.API.Services;
-using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -38,8 +38,10 @@ builder.Services.AddProblemDetails(options => options.CustomizeProblemDetails = 
 #if DEBUG
 builder.Services.AddTransient<ILocalMailService, LocalMailService>();
 #else
-builder.Services.AddSingleton<ILocalMailService, CloudMainService>();
+builder.Services.AddTransient<ILocalMailService, CloudMainService>();
 #endif
+
+builder.Services.AddSingleton<CitiesDataStore>();
 var app = builder.Build();
 
 //

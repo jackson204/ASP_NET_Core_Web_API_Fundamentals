@@ -5,7 +5,7 @@ using Serilog;
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.Console()
-    .WriteTo.File("logs/cityinfo.log", rollingInterval:RollingInterval.Hour)  //每一小時重新產新新的檔案
+    .WriteTo.File("logs/cityinfo.log", rollingInterval: RollingInterval.Hour) //每一小時重新產新新的檔案
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,8 +35,11 @@ builder.Services.AddProblemDetails(options => options.CustomizeProblemDetails = 
 
 #endregion
 
-builder.Services.AddTransient<LocalMailService>();
-builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
+#if DEBUG
+builder.Services.AddTransient<ILocalMailService, LocalMailService>();
+#else
+builder.Services.AddSingleton<ILocalMailService, CloudMainService>();
+#endif
 var app = builder.Build();
 
 //

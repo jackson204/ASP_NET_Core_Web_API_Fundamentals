@@ -1,5 +1,7 @@
+using CityInfo.API.DbContexts;
 using CityInfo.API.Models;
 using CityInfo.API.Services;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -42,6 +44,8 @@ builder.Services.AddTransient<ILocalMailService, CloudMainService>();
 #endif
 
 builder.Services.AddSingleton<CitiesDataStore>();
+
+builder.Services.AddDbContext<CityInfoContext>(optionsBuilder => optionsBuilder.UseSqlite("Data Source =CityInfo.db"));
 var app = builder.Build();
 
 //

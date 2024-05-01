@@ -45,7 +45,7 @@ builder.Services.AddTransient<ILocalMailService, CloudMainService>();
 
 builder.Services.AddSingleton<CitiesDataStore>();
 
-builder.Services.AddDbContext<CityInfoContext>(optionsBuilder => optionsBuilder.UseSqlite("Data Source =CityInfo.db"));
+builder.Services.AddDbContext<CityInfoContext>(optionsBuilder => optionsBuilder.UseSqlite(builder.Configuration.GetConnectionString("CityInfoContextConnection")));
 var app = builder.Build();
 
 //

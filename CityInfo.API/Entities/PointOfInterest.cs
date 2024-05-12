@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CityInfo.API.Entities;
 
 namespace CityInfo.API.Entites;
 

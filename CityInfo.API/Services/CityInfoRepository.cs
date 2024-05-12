@@ -1,5 +1,6 @@
 using CityInfo.API.DbContexts;
 using CityInfo.API.Entites;
+using CityInfo.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CityInfo.API.Services;
